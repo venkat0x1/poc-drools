@@ -1,0 +1,28 @@
+import com.XploR.drools.products.ProductFinalPriceDTO;
+
+global com.XploR.drools.products.ProductFinalPriceDTO productFinalPriceDTO;
+
+dialect "mvel"
+
+rule "ICICI Credit Card Discount"
+    when
+        ProductFinalPriceDTO(creditCardType == "ICICI")
+    then
+        double discount = productFinalPriceDTO.getFinalPrice() * 0.20;
+        productFinalPriceDTO.setFinalPrice(productFinalPriceDTO.getFinalPrice() - discount);
+end
+
+rule "Axis Credit Card Discount"
+    when
+        ProductFinalPriceDTO(creditCardType == "AXIS")
+    then
+        double discount = productFinalPriceDTO.getFinalPrice() * 0.15;
+        productFinalPriceDTO.setFinalPrice(productFinalPriceDTO.getFinalPrice() - discount);
+end
+
+rule "HDFC Credit Card Discount"
+    when
+        ProductFinalPriceDTO(creditCardType == "HDFC")
+    then
+        productFinalPriceDTO.setFinalPrice(999.0);
+end
